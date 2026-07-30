@@ -49,10 +49,5 @@ namespace SRO.PK2API.Utility
             handle.Free();
             return bytes;
         }
-
-        public static bool Equal(byte[] bytes)
-        {
-            return true;
-        }
     }
 }

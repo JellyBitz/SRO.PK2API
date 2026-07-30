@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 // https://www.elitepvpers.com/forum/sro-coding-corner/1063078-c-silkroadsecurity.html
 namespace SRO.PK2API.Security
@@ -289,6 +290,24 @@ namespace SRO.PK2API.Security
 				}
 			}
 		}
+        /// <summary>
+        /// Sets up the blowfish object building the key as the game does.
+        /// </summary>
+        public void Initialize(string ascii_key, byte[] base_key)
+        {
+            // Max count of 56 key bytes
+            byte length = (byte)Math.Min(ascii_key.Length, 56);
+            byte[] bf_key = new byte[length];
+
+            // Their key modification algorithm for the final blowfish key
+            for (byte i = 0; i < length; i++)
+            {
+                byte b = i < base_key.Length ? base_key[i] : (byte)0;
+                bf_key[i] = (byte)(ascii_key[i] ^ b);
+            }
+
+            Initialize(bf_key);
+        }
         /// <summary>
         /// Returns the output length based on the size. This can be used to 
         /// determine how many bytes of output space is needed for data that

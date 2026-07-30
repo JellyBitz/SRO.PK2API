@@ -33,8 +33,28 @@ namespace SRO.PK2API
         /// <exception cref="IOException"/>
         public Pk2Stream(string path, string key, bool isReadOnly = false)
         {
+            InitPk2Stream(path,
+                key, new byte[] { 0x03, 0xF8, 0xE4, 0x44, 0x88, 0x99, 0x3F, 0x64, 0xFE, 0x35 }, // Using the default base key from Silkroad Online
+                isReadOnly
+            );
+        }
+        /// <summary>
+        /// Initialize a PK2 file stream which handles all the data required to work with it.
+        /// </summary>
+        /// <param name="path">Path to the PK2 file.</param>
+        /// <param name="key">Blowfish key used for encryption.</param>
+        /// <param name="baseKey">Blowfish key used for encryption.</param>
+        /// <param name="isReadOnly">Check if the stream is gonna be used for read only. Otherwise the file will be created in case does not exists.</param>
+        /// <exception cref="AuthenticationException"/>
+        /// <exception cref="IOException"/>
+        public Pk2Stream(string path, string key, byte[] baseKey, bool isReadOnly = false)
+        {
+            InitPk2Stream(path, key, baseKey, isReadOnly);
+        }
+        private void InitPk2Stream(string path, string key, byte[] baseKey, bool isReadOnly)
+        {
             // Set up blowfish
-            mBlowfish.Initialize(key);
+            mBlowfish.Initialize(key,baseKey);
 
             // Check file existence first
             var fileExists = File.Exists(path);
@@ -72,6 +92,7 @@ namespace SRO.PK2API
                 throw new IOException("Error reading PK2 file!", ex);
             }
         }
+
         #endregion
 
         #region Public Methods

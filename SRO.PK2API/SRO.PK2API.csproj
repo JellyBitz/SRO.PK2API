@@ -44,7 +44,6 @@
     <Compile Include="SRO.PK2API\JMXPACK.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SRO.PK2API.Security\Blowfish.cs" />
-    <Compile Include="SRO.PK2API.Utility\BlowfishHelpers.cs" />
     <Compile Include="SRO.PK2API.Utility\ByteArrayHelpers.cs" />
     <Compile Include="SRO.PK2API.Utility\FileStreamHelpers.cs" />
     <Compile Include="SRO.PK2API\Pk2File.cs" />
